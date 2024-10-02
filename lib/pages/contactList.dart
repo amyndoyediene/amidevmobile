@@ -8,12 +8,12 @@ class ContactList extends StatefulWidget {
 
 class _ContactListState extends State<ContactList> {
   List<Contact> contacts = [
-    Contact(nom: 'OURI', imageProfil: 'image-1.jpg'),
+    Contact(nom: 'OURI', imageProfil: 'image-2.jpg'),
     Contact(nom: 'AMSA', imageProfil: 'image-2.png'),
     Contact(nom: 'KHOUD', imageProfil: 'image-3.jpg'),
     Contact(nom: 'NDE', imageProfil: 'image-5.jpg'),
     Contact(nom: 'BABS', imageProfil: 'image-6.jpg'),
-    Contact(nom: 'MAM', imageProfil: 'image-4.jpg'),
+    Contact(nom: 'MAM', imageProfil: 'image-2.jpg'),
   ];
 
   @override

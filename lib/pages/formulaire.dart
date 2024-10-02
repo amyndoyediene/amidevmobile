@@ -61,7 +61,9 @@ class _HomeState extends State<Home> {
                     return null;
                   },
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 20.0),
+
+                // Bouton "Voir contact"
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -70,7 +72,6 @@ class _HomeState extends State<Home> {
                     side: BorderSide(width: 1.0, color: Colors.green),
                   ),
                   onPressed: () {
-                    // Naviguer vers la liste des contacts après validation du formulaire
                     if (_formKey.currentState!.validate()) {
                       Navigator.pushNamed(context, '/contactList', arguments: {
                         'email': email,
@@ -79,10 +80,57 @@ class _HomeState extends State<Home> {
                     }
                   },
                   child: Text(
-                    'voir contact',
+                    'Voir contact',
                     style: TextStyle(color: Colors.green),
                   ),
-                  
+                ),
+
+                SizedBox(height: 10.0),
+
+                // Bouton "Voir image"
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    side: BorderSide(width: 1.0, color: Colors.green),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pushNamed(context, '/imagePage', arguments: {
+                        'email': email,
+                        'password': password,
+                      });
+                    }
+                  },
+                  child: Text(
+                    'Voir image',
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+
+                SizedBox(height: 10.0),
+
+                // Nouveau bouton "Voir cahier"
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    side: BorderSide(width: 1.0, color: Colors.blue),
+                  ),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pushNamed(context, '/fileList', arguments: {
+                        'email': email,
+                        'password': password,
+                      });
+                    }
+                  },
+                  child: Text(
+                    'Voir cahier',
+                    style: TextStyle(color: Colors.blue),
+                  ),
                 ),
               ],
             ),

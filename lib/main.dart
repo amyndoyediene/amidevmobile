@@ -1,6 +1,9 @@
 import 'package:amimobile/pages/contactList.dart';
 import 'package:amimobile/pages/detailContact.dart';
 import 'package:amimobile/pages/formulaire.dart';
+import 'package:amimobile/pages/bienvenu.dart';
+import 'package:amimobile/pages/fileList.dart';
+import 'package:amimobile/pages/imagePage.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -16,11 +19,14 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
-        '/home': (context) => Home(),
+        '/': (context) => WelcomePage(),
+        '/formulaire': (context) => Home(),
         '/contactList': (context) => ContactList(),
         '/detailContact': (context) => DetailContact(),
+        '/fileList': (context) => FileList(),
+        '/imagePage': (context) => ImagePage()
       },
     );
   }
