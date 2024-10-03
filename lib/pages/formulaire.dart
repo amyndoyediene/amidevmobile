@@ -28,6 +28,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  // Fonction pour valider et soumettre les données, puis réinitialiser
+  void _validateAndSubmit() {
+    if (_formKey.currentState!.validate()) {
+      // Si la validation est réussie
+      _formKey.currentState!.save();
+      // Afficher un message de validation
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Authentification réussie')),
+      );
+      // Soumettre les données et naviguer
+      Navigator.pushNamed(context, '/contactList', arguments: {
+        'email': email,
+        'password': password,
+      });
+      // Réinitialiser le formulaire
+      _formKey.currentState?.reset();
+      setState(() {
+        email = '';
+        password = '';
+      });
+    } else {
+      // Afficher un message d'erreur si la validation échoue
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erreur: Veuillez corriger les champs')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +73,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  // Animation de la transparence sur le champ Email
+                  // Animation sur le champ Email
                   AnimatedOpacity(
                     opacity: email.isNotEmpty ? 1.0 : 0.5,
                     duration: Duration(milliseconds: 500),
@@ -53,7 +81,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       decoration: InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.email), // Icône de mail
+                        prefixIcon: Icon(Icons.email),
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -64,13 +92,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         if (value == null || value.isEmpty) {
                           return 'Veuillez entrer un email';
                         }
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$')
+                            .hasMatch(value)) {
+                          return 'Veuillez entrer un email valide';
+                        }
                         return null;
                       },
                     ),
                   ),
                   SizedBox(height: 10.0),
 
-                  // Animation de la transparence sur le champ Mot de passe
+                  // Animation sur le champ Mot de passe
                   AnimatedOpacity(
                     opacity: password.isNotEmpty ? 1.0 : 0.5,
                     duration: Duration(milliseconds: 500),
@@ -78,7 +110,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       decoration: InputDecoration(
                         labelText: 'Mot de passe',
                         border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.lock), // Icône de mot de passe
+                        prefixIcon: Icon(Icons.lock),
                       ),
                       obscureText: true,
                       onChanged: (value) {
@@ -90,11 +122,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         if (value == null || value.isEmpty) {
                           return 'Veuillez entrer un mot de passe';
                         }
+                        if (value.length < 6) {
+                          return 'Le mot de passe doit comporter au moins 6 caractères';
+                        }
                         return null;
                       },
                     ),
                   ),
                   SizedBox(height: 20.0),
+
+                  // Bouton "Valider" qui combine validation, soumission et réinitialisation
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    onPressed: _validateAndSubmit,
+                    child: Text(
+                      'Valider',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 10.0),
 
                   // Bouton "Voir contact" avec une animation de rotation
                   RotationTransition(
